@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
+#define MAX 100
 
 // Class definition with encapsulation
 class Person {
@@ -28,6 +29,8 @@ public:
     void greet() {
         cout << "Hello, " << name << "!" << endl;
     }
+
+    ~Person(){}
 };
 
 // Derived class using inheritance
@@ -118,6 +121,16 @@ int main() {
     cout << endl;
 
     return 0;
+
+        // Pointer example
+        int value = 10;
+        int* ptr = &value; // Pointer to value
+        cout << "Value: " << value << endl;
+    
+        // Modifying value using pointer
+        *ptr = 20;
+        cout << "Modified value via pointer: " << value << endl;
+    
 }
 
 // Function definitions

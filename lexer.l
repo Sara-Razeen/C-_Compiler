@@ -28,6 +28,33 @@ STRING_CONST \"(\\[abfnrtv\\'\"]|[^\\"])*\"
 "#include"[ \t]*"<"[^>]+">"   { print_token("HEADER_INCLUDE", yytext); return HEADER_INCLUDE; }
 "#include"[ \t]*\"[^"]+\"     { print_token("HEADER_INCLUDE", yytext); return HEADER_INCLUDE; }
 
+
+"#define"[ \t]+[a-zA-Z_][a-zA-Z0-9_]*[ \t]*(.*)  { 
+    print_token("PREPROCESSOR_DEFINE", yytext); 
+    return PREPROCESSOR_DEFINE; 
+}
+"#ifdef"[ \t]+[a-zA-Z_][a-zA-Z0-9_]*        { 
+    print_token("PREPROCESSOR_IFDEF", yytext); 
+    return PREPROCESSOR_IFDEF; 
+}
+"#ifndef"[ \t]+[a-zA-Z_][a-zA-Z0-9_]*       { 
+    print_token("PREPROCESSOR_IFNDEF", yytext); 
+    return PREPROCESSOR_IFNDEF; 
+}
+"#endif"                                   { 
+    print_token("PREPROCESSOR_ENDIF", yytext); 
+    return PREPROCESSOR_ENDIF; 
+}
+"#else"                                    { 
+    print_token("PREPROCESSOR_ELSE", yytext); 
+    return PREPROCESSOR_ELSE; 
+}
+"#undef"[ \t]+[a-zA-Z_][a-zA-Z0-9_]*       { 
+    print_token("PREPROCESSOR_UNDEF", yytext); 
+    return PREPROCESSOR_UNDEF; 
+}
+
+
 "using"                 { print_token("KEYWORD", yytext); return USING; }
 "namespace"             { print_token("KEYWORD", yytext); return NAMESPACE; }
 "std"                   { print_token("KEYWORD", yytext); return STD; }

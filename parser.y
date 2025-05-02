@@ -21,7 +21,7 @@ void print_token(const char *type, const char *value);
     char* id;
 }
 
-%token HEADER_INCLUDE
+%token HEADER_INCLUDE PREPROCESSOR_DEFINE PREPROCESSOR_IFDEF PREPROCESSOR_ENDIF PREPROCESSOR_IFNDEF PREPROCESSOR_ELSE PREPROCESSOR_UNDEF
 %token INT IF ELSE RETURN USING NAMESPACE STD COUT ENDL MAIN CIN
 %token EQ ASSIGN SEMICOLON LBRACE RBRACE LPAREN RPAREN SHIFTLEFT DOUBLE_QUOTE COMMA
 %token CHAR FLOAT DOUBLE BOOL VOID STRING TRUE FALSE
@@ -59,11 +59,30 @@ void print_token(const char *type, const char *value);
 
 program:
     includes 
+    preprocessor_list declarations
     USING NAMESPACE STD SEMICOLON 
+    preprocessor_list declarations
     class_defs
     function_defs 
     main_func
     function_defs 
+    ;
+
+
+preprocessor_list:
+    /* empty */
+    | preprocessor_list preprocessor_directive
+    ;
+
+
+
+preprocessor_directive:
+    PREPROCESSOR_DEFINE 
+    | PREPROCESSOR_IFDEF 
+    | PREPROCESSOR_ENDIF
+    | PREPROCESSOR_IFNDEF 
+    | PREPROCESSOR_ELSE 
+    | PREPROCESSOR_UNDEF
     ;
 
 
@@ -100,9 +119,11 @@ declaration_stmt:
 id_list:
     ID
     | ID ASSIGN expr
+    | ID ASSIGN NUMBER
     | ID LBRACKET NUMBER RBRACKET
     | id_list COMMA ID
     | id_list COMMA ID ASSIGN expr
+    | id_list COMMA ID ASSIGN NUMBER
     | id_list COMMA ID LBRACKET NUMBER RBRACKET
     ;    
 
@@ -112,10 +133,11 @@ type_specifier:
     | DOUBLE
     | CHAR
     | BOOL
-    |  STRING
+    | STRING
     | VOID
     | ID
     | CONST type_specifier
+    |  type_specifier '*'
     ;
   
 
@@ -187,13 +209,6 @@ stmt:
 
     ;
 
-id_list:
-    ID
-  | ID ASSIGN NUMBER
-  | ID LBRACKET NUMBER RBRACKET
-  | id_list COMMA ID
-  | id_list COMMA ID ASSIGN NUMBER
-  | id_list COMMA ID LBRACKET NUMBER RBRACKET
 
 number_list:
       NUMBER
@@ -286,9 +301,12 @@ expr:
     | expr '.' function_call   // object.method()
     | THIS '.' ID
     | THIS '.' function_call
-
+    | '*' expr           
+    | '&' expr           
     | expr INC
     | expr DEC
+    | '*' error          { yyerror("Expected pointer expression after '*'"); }
+    | '&' error          { yyerror("Expected variable after '&'"); }
     | error INC { yyerror("Missing variable before '++'"); }
     | error DEC { yyerror("Missing variable before '--'"); }
     | '+' expr %prec UMINUS
@@ -594,6 +612,9 @@ class_member:
   | VIRTUAL type_specifier ID LPAREN param_list RPAREN SEMICOLON
   | type_specifier ID LPAREN param_list RPAREN compound_stmt
   | VIRTUAL type_specifier ID LPAREN RPAREN compound_stmt
+  | '~'  ID LPAREN RPAREN compound_stmt  // Destructor definition
+  | VIRTUAL '~'  ID LPAREN RPAREN SEMICOLON  // Pure virtual destructor
+  | VIRTUAL '~'  ID LPAREN RPAREN compound_stmt
   ;
 
 member_declarations:
@@ -605,6 +626,8 @@ member_declaration:
     type_specifier ID SEMICOLON
     | function_decl
     | function_def
+    | destructor_def
+    | constructor_def
     | VIRTUAL function_decl
     | VIRTUAL function_def
     ;
@@ -637,6 +660,10 @@ constructor_def:
     ID LPAREN arg_list RPAREN compound_stmt
     ;
 
+
+destructor_def:
+    '~'  ID LPAREN RPAREN compound_stmt
+    ;
 return_stmt:
       RETURN return_expr SEMICOLON
     | RETURN return_expr error 
