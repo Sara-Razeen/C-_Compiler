@@ -12,7 +12,6 @@ FILE *token_table;
 void print_token(const char *type, const char *value);
 %}
 
-
 %start program
 
 %union {
@@ -612,8 +611,8 @@ class_member:
   | VIRTUAL type_specifier ID LPAREN param_list RPAREN SEMICOLON
   | type_specifier ID LPAREN param_list RPAREN compound_stmt
   | VIRTUAL type_specifier ID LPAREN RPAREN compound_stmt
-  | '~'  ID LPAREN RPAREN compound_stmt  // Destructor definition
-  | VIRTUAL '~'  ID LPAREN RPAREN SEMICOLON  // Pure virtual destructor
+  | '~'  ID LPAREN RPAREN compound_stmt 
+  | VIRTUAL '~'  ID LPAREN RPAREN SEMICOLON 
   | VIRTUAL '~'  ID LPAREN RPAREN compound_stmt
   ;
 
@@ -660,7 +659,6 @@ constructor_def:
     ID LPAREN arg_list RPAREN compound_stmt
     ;
 
-
 destructor_def:
     '~'  ID LPAREN RPAREN compound_stmt
     ;
@@ -694,7 +692,6 @@ void yyerror(const char *s) {
     }
     error_count++;
 }
-
 
 int main(int argc, char **argv) {
     pending_custom_msg = NULL;
