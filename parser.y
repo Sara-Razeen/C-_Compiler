@@ -614,6 +614,7 @@ class_member:
   | '~'  ID LPAREN RPAREN compound_stmt 
   | VIRTUAL '~'  ID LPAREN RPAREN SEMICOLON 
   | VIRTUAL '~'  ID LPAREN RPAREN compound_stmt
+  | VIRTUAL type_specifier error { yyerror("Invalid virtual function"); }
   ;
 
 member_declarations:
