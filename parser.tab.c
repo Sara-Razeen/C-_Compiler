@@ -72,12 +72,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+char* pending_custom_msg = NULL;
 extern int yylex();
 extern FILE* yyin;
 extern int line_no;
 int error_count = 0;
 void yyerror(const char *s);
-const char* pending_custom_msg = NULL;
 FILE *token_table;
 void print_token(const char *type, const char *value);
 
@@ -659,45 +659,45 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    60,    60,    71,    73,    79,    80,    81,    82,    83,
-      84,    89,    90,    91,    95,    96,   100,   101,   105,   109,
-     110,   111,   112,   113,   114,   119,   120,   121,   122,   123,
-     124,   125,   126,   130,   131,   132,   133,   134,   135,   136,
-     137,   138,   139,   149,   150,   151,   152,   153,   157,   158,
-     162,   163,   167,   168,   169,   173,   174,   175,   176,   180,
-     181,   185,   186,   187,   191,   192,   193,   194,   195,   196,
-     197,   198,   199,   200,   201,   202,   203,   204,   205,   206,
-     213,   214,   218,   219,   224,   225,   230,   231,   232,   233,
-     234,   235,   236,   237,   238,   239,   240,   241,   242,   243,
-     244,   245,   246,   247,   248,   249,   250,   251,   252,   253,
-     254,   255,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
-     285,   286,   290,   291,   292,   293,   294,   295,   296,   297,
-     298,   299,   300,   301,   302,   303,   304,   305,   306,   307,
-     308,   309,   310,   311,   312,   313,   314,   315,   316,   317,
-     318,   319,   320,   321,   322,   323,   324,   325,   326,   327,
-     328,   329,   330,   331,   332,   333,   334,   335,   336,   337,
-     338,   339,   340,   341,   342,   343,   344,   345,   346,   347,
-     348,   349,   350,   351,   352,   353,   354,   355,   356,   357,
-     358,   359,   360,   361,   362,   363,   364,   365,   366,   367,
-     368,   369,   370,   371,   372,   373,   374,   381,   382,   383,
-     384,   388,   389,   393,   394,   395,   396,   402,   403,   404,
-     405,   406,   407,   408,   409,   410,   411,   412,   416,   417,
-     421,   422,   423,   424,   425,   426,   427,   428,   429,   434,
-     435,   436,   437,   438,   442,   447,   448,   453,   454,   455,
-     456,   457,   458,   461,   462,   465,   466,   467,   468,   469,
-     470,   471,   476,   477,   478,   481,   482,   483,   484,   485,
-     486,   487,   488,   491,   492,   493,   494,   497,   498,   499,
-     500,   501,   502,   503,   504,   509,   512,   513,   514,   515,
-     516,   517,   521,   522,   523,   527,   528,   532,   533,   534,
-     538,   539,   542,   543,   549,   550,   554,   555,   556,   557,
-     558,   559,   560,   561,   566,   567,   571,   572,   573,   578,
-     579,   584,   585,   586,   587,   588,   589,   593,   594,   598,
-     599,   603,   604,   608,   609,   610,   611,   612,   613,   614,
-     615,   616,   617,   621,   622,   626,   627,   628,   629,   630,
-     631,   632,   636,   637,   638,   642,   643,   644,   648,   649,
-     650,   651,   655,   656,   660,   664,   667,   668,   670,   675
+       0,    61,    61,    72,    74,    80,    81,    82,    83,    84,
+      85,    90,    91,    92,    96,    97,   101,   102,   106,   110,
+     111,   112,   113,   114,   115,   120,   121,   122,   123,   124,
+     125,   126,   127,   131,   132,   133,   134,   135,   136,   137,
+     138,   139,   140,   150,   151,   152,   153,   154,   158,   159,
+     163,   164,   168,   169,   170,   174,   175,   176,   177,   181,
+     182,   186,   187,   188,   192,   193,   194,   195,   196,   197,
+     198,   199,   200,   201,   202,   203,   204,   205,   206,   207,
+     214,   215,   219,   220,   225,   226,   231,   232,   233,   234,
+     235,   236,   237,   238,   239,   240,   241,   242,   243,   244,
+     245,   246,   247,   248,   249,   250,   251,   252,   253,   254,
+     255,   256,   258,   259,   260,   261,   262,   263,   264,   265,
+     266,   267,   268,   269,   270,   271,   272,   273,   274,   275,
+     276,   277,   278,   279,   280,   281,   282,   283,   284,   285,
+     286,   287,   291,   292,   293,   294,   295,   296,   297,   298,
+     299,   300,   301,   302,   303,   304,   305,   306,   307,   308,
+     309,   310,   311,   312,   313,   314,   315,   316,   317,   318,
+     319,   320,   321,   322,   323,   324,   325,   326,   327,   328,
+     329,   330,   331,   332,   333,   334,   335,   336,   337,   338,
+     339,   340,   341,   342,   343,   344,   345,   346,   347,   348,
+     349,   350,   351,   352,   353,   354,   355,   356,   357,   358,
+     359,   360,   361,   362,   363,   364,   365,   366,   367,   368,
+     369,   370,   371,   372,   373,   374,   375,   382,   383,   384,
+     385,   389,   390,   394,   395,   396,   397,   403,   404,   405,
+     406,   407,   408,   409,   410,   411,   412,   413,   417,   418,
+     422,   423,   424,   425,   426,   427,   428,   429,   430,   435,
+     436,   437,   438,   439,   443,   448,   449,   454,   455,   456,
+     457,   458,   459,   462,   463,   466,   467,   468,   469,   470,
+     471,   472,   477,   478,   479,   482,   483,   484,   485,   486,
+     487,   488,   489,   492,   493,   494,   495,   498,   499,   500,
+     501,   502,   503,   504,   505,   510,   513,   514,   515,   516,
+     517,   518,   522,   523,   524,   528,   529,   533,   534,   535,
+     539,   540,   543,   544,   550,   551,   555,   556,   557,   558,
+     559,   560,   561,   562,   567,   568,   572,   573,   574,   579,
+     580,   585,   586,   587,   588,   589,   590,   594,   595,   599,
+     600,   604,   605,   609,   610,   611,   612,   613,   614,   615,
+     616,   617,   618,   622,   623,   627,   628,   629,   630,   631,
+     632,   633,   637,   638,   639,   643,   644,   645,   649,   650,
+     651,   652,   656,   657,   661,   665,   668,   669,   671,   676
 };
 #endif
 
@@ -2815,781 +2815,781 @@ yyreduce:
   switch (yyn)
     {
   case 44: /* main_func: INT error  */
-#line 150 "parser.y"
+#line 151 "parser.y"
                 { yyerror("Missing 'main' after 'int'"); }
 #line 2821 "parser.tab.c"
     break;
 
   case 45: /* main_func: INT MAIN error  */
-#line 151 "parser.y"
+#line 152 "parser.y"
                      { yyerror("Missing '(' after 'main'"); }
 #line 2827 "parser.tab.c"
     break;
 
   case 46: /* main_func: INT MAIN LPAREN error  */
-#line 152 "parser.y"
+#line 153 "parser.y"
                             { yyerror("Missing ')' after '('"); }
 #line 2833 "parser.tab.c"
     break;
 
   case 47: /* main_func: INT MAIN LPAREN RPAREN error  */
-#line 153 "parser.y"
+#line 154 "parser.y"
                                    { yyerror("Missing '{' to start main"); }
 #line 2839 "parser.tab.c"
     break;
 
   case 112: /* decl: INT error  */
-#line 257 "parser.y"
+#line 258 "parser.y"
                 { yyerror("Missing identifier after 'int'"); }
 #line 2845 "parser.tab.c"
     break;
 
   case 113: /* decl: INT ID error  */
-#line 258 "parser.y"
+#line 259 "parser.y"
                    { yyerror("Expected ';' or '=' after variable name"); }
 #line 2851 "parser.tab.c"
     break;
 
   case 114: /* decl: INT ID ASSIGN error  */
-#line 259 "parser.y"
+#line 260 "parser.y"
                           { yyerror("Missing value after '='"); }
 #line 2857 "parser.tab.c"
     break;
 
   case 115: /* decl: INT ID ASSIGN NUMBER error  */
-#line 260 "parser.y"
+#line 261 "parser.y"
                                  { yyerror("Missing ';' after initialization"); }
 #line 2863 "parser.tab.c"
     break;
 
   case 116: /* decl: CHAR error  */
-#line 261 "parser.y"
+#line 262 "parser.y"
                  { yyerror("Missing identifier after 'char'"); }
 #line 2869 "parser.tab.c"
     break;
 
   case 117: /* decl: CHAR ID error  */
-#line 262 "parser.y"
+#line 263 "parser.y"
                     { yyerror("Expected ';' or '=' after variable name"); }
 #line 2875 "parser.tab.c"
     break;
 
   case 118: /* decl: CHAR ID ASSIGN error  */
-#line 263 "parser.y"
+#line 264 "parser.y"
                            { yyerror("Missing value after '=' in char"); }
 #line 2881 "parser.tab.c"
     break;
 
   case 119: /* decl: CHAR ID ASSIGN STRING_LITERAL error  */
-#line 264 "parser.y"
+#line 265 "parser.y"
                                           { yyerror("Missing ';' after initialization"); }
 #line 2887 "parser.tab.c"
     break;
 
   case 120: /* decl: FLOAT error  */
-#line 265 "parser.y"
+#line 266 "parser.y"
                   { yyerror("Missing identifier after 'float'"); }
 #line 2893 "parser.tab.c"
     break;
 
   case 121: /* decl: FLOAT ID error  */
-#line 266 "parser.y"
+#line 267 "parser.y"
                      { yyerror("Expected ';' or '=' after variable name"); }
 #line 2899 "parser.tab.c"
     break;
 
   case 122: /* decl: FLOAT ID ASSIGN error  */
-#line 267 "parser.y"
+#line 268 "parser.y"
                             { yyerror("Missing value after '=' in float"); }
 #line 2905 "parser.tab.c"
     break;
 
   case 123: /* decl: FLOAT ID ASSIGN NUMBER error  */
-#line 268 "parser.y"
+#line 269 "parser.y"
                                    { yyerror("Missing ';' after initialization"); }
 #line 2911 "parser.tab.c"
     break;
 
   case 124: /* decl: DOUBLE error  */
-#line 269 "parser.y"
+#line 270 "parser.y"
                    { yyerror("Missing identifier after 'double'"); }
 #line 2917 "parser.tab.c"
     break;
 
   case 125: /* decl: DOUBLE ID error  */
-#line 270 "parser.y"
+#line 271 "parser.y"
                       { yyerror("Expected ';' or '=' after variable name"); }
 #line 2923 "parser.tab.c"
     break;
 
   case 126: /* decl: DOUBLE ID ASSIGN error  */
-#line 271 "parser.y"
+#line 272 "parser.y"
                              { yyerror("Missing value after '=' in double"); }
 #line 2929 "parser.tab.c"
     break;
 
   case 127: /* decl: DOUBLE ID ASSIGN NUMBER error  */
-#line 272 "parser.y"
+#line 273 "parser.y"
                                     { yyerror("Missing ';' after initialization"); }
 #line 2935 "parser.tab.c"
     break;
 
   case 128: /* decl: BOOL error  */
-#line 273 "parser.y"
+#line 274 "parser.y"
                  { yyerror("Missing identifier after 'bool'"); }
 #line 2941 "parser.tab.c"
     break;
 
   case 129: /* decl: BOOL ID error  */
-#line 274 "parser.y"
+#line 275 "parser.y"
                     { yyerror("Expected ';' or '=' after variable name"); }
 #line 2947 "parser.tab.c"
     break;
 
   case 130: /* decl: BOOL ID ASSIGN error  */
-#line 275 "parser.y"
+#line 276 "parser.y"
                            { yyerror("Missing value after '=' in bool"); }
 #line 2953 "parser.tab.c"
     break;
 
   case 131: /* decl: BOOL ID ASSIGN NUMBER error  */
-#line 276 "parser.y"
+#line 277 "parser.y"
                                   { yyerror("Missing ';' after initialization"); }
 #line 2959 "parser.tab.c"
     break;
 
   case 132: /* decl: INT ID LBRACKET error RBRACKET SEMICOLON  */
-#line 277 "parser.y"
+#line 278 "parser.y"
                                                { yyerror("Missing size in int array declaration"); }
 #line 2965 "parser.tab.c"
     break;
 
   case 133: /* decl: INT ID LBRACKET NUMBER error  */
-#line 278 "parser.y"
+#line 279 "parser.y"
                                    { yyerror("Missing ']' in int array declaration"); }
 #line 2971 "parser.tab.c"
     break;
 
   case 134: /* decl: CHAR ID LBRACKET error RBRACKET SEMICOLON  */
-#line 279 "parser.y"
+#line 280 "parser.y"
                                                 { yyerror("Missing size in char array declaration"); }
 #line 2977 "parser.tab.c"
     break;
 
   case 135: /* decl: CHAR ID LBRACKET NUMBER error  */
-#line 280 "parser.y"
+#line 281 "parser.y"
                                     { yyerror("Missing ']' in char array declaration"); }
 #line 2983 "parser.tab.c"
     break;
 
   case 136: /* decl: FLOAT ID LBRACKET error RBRACKET SEMICOLON  */
-#line 281 "parser.y"
+#line 282 "parser.y"
                                                  { yyerror("Missing size in float array declaration"); }
 #line 2989 "parser.tab.c"
     break;
 
   case 137: /* decl: FLOAT ID LBRACKET NUMBER error  */
-#line 282 "parser.y"
+#line 283 "parser.y"
                                      { yyerror("Missing ']' in float array declaration"); }
 #line 2995 "parser.tab.c"
     break;
 
   case 138: /* decl: DOUBLE ID LBRACKET error RBRACKET SEMICOLON  */
-#line 283 "parser.y"
+#line 284 "parser.y"
                                                   { yyerror("Missing size in double array declaration"); }
 #line 3001 "parser.tab.c"
     break;
 
   case 139: /* decl: DOUBLE ID LBRACKET NUMBER error  */
-#line 284 "parser.y"
+#line 285 "parser.y"
                                       { yyerror("Missing ']' in double array declaration"); }
 #line 3007 "parser.tab.c"
     break;
 
   case 140: /* decl: BOOL ID LBRACKET error RBRACKET SEMICOLON  */
-#line 285 "parser.y"
+#line 286 "parser.y"
                                                 { yyerror("Missing size in bool array declaration"); }
 #line 3013 "parser.tab.c"
     break;
 
   case 141: /* decl: BOOL ID LBRACKET NUMBER error  */
-#line 286 "parser.y"
+#line 287 "parser.y"
                                     { yyerror("Missing ']' in bool array declaration"); }
 #line 3019 "parser.tab.c"
     break;
 
   case 159: /* expr: '*' error  */
-#line 307 "parser.y"
+#line 308 "parser.y"
                          { yyerror("Expected pointer expression after '*'"); }
 #line 3025 "parser.tab.c"
     break;
 
   case 160: /* expr: '&' error  */
-#line 308 "parser.y"
+#line 309 "parser.y"
                          { yyerror("Expected variable after '&'"); }
 #line 3031 "parser.tab.c"
     break;
 
   case 161: /* expr: error INC  */
-#line 309 "parser.y"
+#line 310 "parser.y"
                 { yyerror("Missing variable before '++'"); }
 #line 3037 "parser.tab.c"
     break;
 
   case 162: /* expr: error DEC  */
-#line 310 "parser.y"
+#line 311 "parser.y"
                 { yyerror("Missing variable before '--'"); }
 #line 3043 "parser.tab.c"
     break;
 
   case 169: /* expr: INC error  */
-#line 317 "parser.y"
+#line 318 "parser.y"
                 { yyerror("Missing variable after '++'"); }
 #line 3049 "parser.tab.c"
     break;
 
   case 170: /* expr: DEC error  */
-#line 318 "parser.y"
+#line 319 "parser.y"
                 { yyerror("Missing variable after '--'"); }
 #line 3055 "parser.tab.c"
     break;
 
   case 171: /* expr: '+' error  */
-#line 319 "parser.y"
+#line 320 "parser.y"
                 { yyerror("Missing operand after '+'"); }
 #line 3061 "parser.tab.c"
     break;
 
   case 172: /* expr: '-' error  */
-#line 320 "parser.y"
+#line 321 "parser.y"
                 { yyerror("Missing operand after '-'"); }
 #line 3067 "parser.tab.c"
     break;
 
   case 173: /* expr: '!' error  */
-#line 321 "parser.y"
+#line 322 "parser.y"
                 { yyerror("Missing operand after '!'"); }
 #line 3073 "parser.tab.c"
     break;
 
   case 174: /* expr: '~' error  */
-#line 322 "parser.y"
+#line 323 "parser.y"
                 { yyerror("Missing operand after '~'"); }
 #line 3079 "parser.tab.c"
     break;
 
   case 180: /* expr: expr '+' error  */
-#line 328 "parser.y"
+#line 329 "parser.y"
                      { yyerror("Missing operand after '+'"); }
 #line 3085 "parser.tab.c"
     break;
 
   case 181: /* expr: expr '-' error  */
-#line 329 "parser.y"
+#line 330 "parser.y"
                      { yyerror("Missing operand after '-'"); }
 #line 3091 "parser.tab.c"
     break;
 
   case 182: /* expr: expr '*' error  */
-#line 330 "parser.y"
+#line 331 "parser.y"
                      { yyerror("Missing operand after '*'"); }
 #line 3097 "parser.tab.c"
     break;
 
   case 183: /* expr: expr '/' error  */
-#line 331 "parser.y"
+#line 332 "parser.y"
                      { yyerror("Missing operand after '/'"); }
 #line 3103 "parser.tab.c"
     break;
 
   case 184: /* expr: expr '%' error  */
-#line 332 "parser.y"
+#line 333 "parser.y"
                      { yyerror("Missing operand after '%'"); }
 #line 3109 "parser.tab.c"
     break;
 
   case 191: /* expr: expr EQ error  */
-#line 339 "parser.y"
+#line 340 "parser.y"
                     { yyerror("Missing operand after '=='"); }
 #line 3115 "parser.tab.c"
     break;
 
   case 192: /* expr: expr NE error  */
-#line 340 "parser.y"
+#line 341 "parser.y"
                     { yyerror("Missing operand after '!='"); }
 #line 3121 "parser.tab.c"
     break;
 
   case 193: /* expr: expr '<' error  */
-#line 341 "parser.y"
+#line 342 "parser.y"
                      { yyerror("Missing operand after '<'"); }
 #line 3127 "parser.tab.c"
     break;
 
   case 194: /* expr: expr '>' error  */
-#line 342 "parser.y"
+#line 343 "parser.y"
                      { yyerror("Missing operand after '>'"); }
 #line 3133 "parser.tab.c"
     break;
 
   case 195: /* expr: expr LE error  */
-#line 343 "parser.y"
+#line 344 "parser.y"
                     { yyerror("Missing operand after '<='"); }
 #line 3139 "parser.tab.c"
     break;
 
   case 196: /* expr: expr GE error  */
-#line 344 "parser.y"
+#line 345 "parser.y"
                     { yyerror("Missing operand after '>='"); }
 #line 3145 "parser.tab.c"
     break;
 
   case 199: /* expr: expr AND error  */
-#line 347 "parser.y"
+#line 348 "parser.y"
                      { yyerror("Missing operand after '&&'"); }
 #line 3151 "parser.tab.c"
     break;
 
   case 200: /* expr: expr OR error  */
-#line 348 "parser.y"
+#line 349 "parser.y"
                     { yyerror("Missing operand after '||'"); }
 #line 3157 "parser.tab.c"
     break;
 
   case 206: /* expr: expr '&' error  */
-#line 354 "parser.y"
+#line 355 "parser.y"
                      { yyerror("Missing operand after '&'"); }
 #line 3163 "parser.tab.c"
     break;
 
   case 207: /* expr: expr '|' error  */
-#line 355 "parser.y"
+#line 356 "parser.y"
                      { yyerror("Missing operand after '|'"); }
 #line 3169 "parser.tab.c"
     break;
 
   case 208: /* expr: expr '^' error  */
-#line 356 "parser.y"
+#line 357 "parser.y"
                      { yyerror("Missing operand after '^'"); }
 #line 3175 "parser.tab.c"
     break;
 
   case 209: /* expr: expr SHIFTLEFT error  */
-#line 357 "parser.y"
+#line 358 "parser.y"
                            { yyerror("Missing operand after '<<'"); }
 #line 3181 "parser.tab.c"
     break;
 
   case 210: /* expr: expr SHIFTRIGHT error  */
-#line 358 "parser.y"
+#line 359 "parser.y"
                             { yyerror("Missing operand after '>>'"); }
 #line 3187 "parser.tab.c"
     break;
 
   case 217: /* expr: ID ASSIGN error  */
-#line 365 "parser.y"
+#line 366 "parser.y"
                       { yyerror("Missing expression after '='"); }
 #line 3193 "parser.tab.c"
     break;
 
   case 218: /* expr: ID ADD_ASSIGN error  */
-#line 366 "parser.y"
+#line 367 "parser.y"
                           { yyerror("Missing expression after '+='"); }
 #line 3199 "parser.tab.c"
     break;
 
   case 219: /* expr: ID SUB_ASSIGN error  */
-#line 367 "parser.y"
+#line 368 "parser.y"
                           { yyerror("Missing expression after '-='"); }
 #line 3205 "parser.tab.c"
     break;
 
   case 220: /* expr: ID MUL_ASSIGN error  */
-#line 368 "parser.y"
+#line 369 "parser.y"
                           { yyerror("Missing expression after '*='"); }
 #line 3211 "parser.tab.c"
     break;
 
   case 221: /* expr: ID DIV_ASSIGN error  */
-#line 369 "parser.y"
+#line 370 "parser.y"
                           { yyerror("Missing expression after '/='"); }
 #line 3217 "parser.tab.c"
     break;
 
   case 222: /* expr: ID MOD_ASSIGN error  */
-#line 370 "parser.y"
+#line 371 "parser.y"
                           { yyerror("Missing expression after '%='"); }
 #line 3223 "parser.tab.c"
     break;
 
   case 224: /* expr: expr '?' error  */
-#line 372 "parser.y"
+#line 373 "parser.y"
                      { yyerror("Missing middle expression in ternary operator"); }
 #line 3229 "parser.tab.c"
     break;
 
   case 225: /* expr: expr '?' expr error  */
-#line 373 "parser.y"
+#line 374 "parser.y"
                           { yyerror("Missing ':' in ternary operator"); }
 #line 3235 "parser.tab.c"
     break;
 
   case 226: /* expr: expr '?' expr ':' error  */
-#line 374 "parser.y"
+#line 375 "parser.y"
                               { yyerror("Missing third expression in ternary operator"); }
 #line 3241 "parser.tab.c"
     break;
 
   case 234: /* input_stmt: CIN error  */
-#line 394 "parser.y"
+#line 395 "parser.y"
                 { yyerror("Missing '>>' after cin"); }
 #line 3247 "parser.tab.c"
     break;
 
   case 235: /* input_stmt: CIN SHIFTRIGHT error  */
-#line 395 "parser.y"
+#line 396 "parser.y"
                            { yyerror("Missing variable after '>>'"); }
 #line 3253 "parser.tab.c"
     break;
 
   case 236: /* input_stmt: CIN SHIFTRIGHT input_list error  */
-#line 396 "parser.y"
+#line 397 "parser.y"
                                       { yyerror("Missing semicolon"); }
 #line 3259 "parser.tab.c"
     break;
 
   case 253: /* output_stmt: COUT SHIFTLEFT output_list error  */
-#line 424 "parser.y"
+#line 425 "parser.y"
                                        {yyerror("Missing '<<' or ';' after expression");}
 #line 3265 "parser.tab.c"
     break;
 
   case 254: /* output_stmt: COUT error  */
-#line 425 "parser.y"
+#line 426 "parser.y"
                  { yyerror("Invalid output statement"); }
 #line 3271 "parser.tab.c"
     break;
 
   case 255: /* output_stmt: COUT SHIFTLEFT error  */
-#line 426 "parser.y"
+#line 427 "parser.y"
                            { yyerror("Missing expression after '<<'"); }
 #line 3277 "parser.tab.c"
     break;
 
   case 256: /* output_stmt: COUT SHIFTLEFT output_list error  */
-#line 427 "parser.y"
+#line 428 "parser.y"
                                        { yyerror("Missing '<<' or ';' after expression"); }
 #line 3283 "parser.tab.c"
     break;
 
   case 257: /* output_stmt: COUT SHIFTLEFT output_list SHIFTLEFT error  */
-#line 428 "parser.y"
+#line 429 "parser.y"
                                                  { yyerror("Missing expression or 'endl' after '<<'"); }
 #line 3289 "parser.tab.c"
     break;
 
   case 258: /* output_stmt: COUT SHIFTLEFT output_list SHIFTLEFT ENDL error  */
-#line 429 "parser.y"
+#line 430 "parser.y"
                                                       { yyerror("Missing ';' after 'endl'"); }
 #line 3295 "parser.tab.c"
     break;
 
   case 262: /* try_catch_stmt: TRY error  */
-#line 437 "parser.y"
+#line 438 "parser.y"
                 { yyerror("Malformed try block"); }
 #line 3301 "parser.tab.c"
     break;
 
   case 263: /* try_catch_stmt: TRY compound_stmt CATCH error  */
-#line 438 "parser.y"
+#line 439 "parser.y"
                                     { yyerror("Malformed catch block"); }
 #line 3307 "parser.tab.c"
     break;
 
   case 275: /* if_stmt: IF error  */
-#line 465 "parser.y"
+#line 466 "parser.y"
                { yyerror("Syntax Error: Missing '(' after 'if'"); }
 #line 3313 "parser.tab.c"
     break;
 
   case 276: /* if_stmt: IF LPAREN error  */
-#line 466 "parser.y"
+#line 467 "parser.y"
                       { yyerror("Syntax Error: Missing condition inside 'if'"); }
 #line 3319 "parser.tab.c"
     break;
 
   case 277: /* if_stmt: IF LPAREN expr error  */
-#line 467 "parser.y"
+#line 468 "parser.y"
                            { yyerror("Syntax Error: Missing ')' after condition in 'if'"); }
 #line 3325 "parser.tab.c"
     break;
 
   case 278: /* if_stmt: IF LPAREN expr RPAREN error  */
-#line 468 "parser.y"
+#line 469 "parser.y"
                                   { yyerror("Syntax Error: Missing '{' to start 'if' block"); }
 #line 3331 "parser.tab.c"
     break;
 
   case 279: /* if_stmt: IF LPAREN expr RPAREN LBRACE error  */
-#line 469 "parser.y"
+#line 470 "parser.y"
                                          { yyerror("Syntax Error: Invalid statements inside 'if' block"); }
 #line 3337 "parser.tab.c"
     break;
 
   case 280: /* if_stmt: IF LPAREN expr RPAREN LBRACE stmts RBRACE ELSE error  */
-#line 470 "parser.y"
+#line 471 "parser.y"
                                                            { yyerror("Syntax Error: Missing '{' or 'if' after 'else'"); }
 #line 3343 "parser.tab.c"
     break;
 
   case 281: /* if_stmt: IF LPAREN expr RPAREN LBRACE stmts RBRACE ELSE LBRACE error  */
-#line 471 "parser.y"
+#line 472 "parser.y"
                                                                   { yyerror("Syntax Error: Invalid statements inside 'else' block"); }
 #line 3349 "parser.tab.c"
     break;
 
   case 285: /* loop_stmt: FOR error  */
-#line 481 "parser.y"
+#line 482 "parser.y"
                 { yyerror("Missing '(' after 'for'"); }
 #line 3355 "parser.tab.c"
     break;
 
   case 286: /* loop_stmt: FOR LPAREN error  */
-#line 482 "parser.y"
+#line 483 "parser.y"
                        { yyerror("Missing initialization expression or declaration in 'for'"); }
 #line 3361 "parser.tab.c"
     break;
 
   case 287: /* loop_stmt: FOR LPAREN for_init error  */
-#line 483 "parser.y"
+#line 484 "parser.y"
                                 { yyerror("Missing ';' after initialization in 'for'"); }
 #line 3367 "parser.tab.c"
     break;
 
   case 288: /* loop_stmt: FOR LPAREN for_init SEMICOLON error  */
-#line 484 "parser.y"
+#line 485 "parser.y"
                                           { yyerror("Missing condition expression in 'for'"); }
 #line 3373 "parser.tab.c"
     break;
 
   case 289: /* loop_stmt: FOR LPAREN for_init SEMICOLON expr error  */
-#line 485 "parser.y"
+#line 486 "parser.y"
                                                { yyerror("Missing ';' after condition in 'for'"); }
 #line 3379 "parser.tab.c"
     break;
 
   case 290: /* loop_stmt: FOR LPAREN for_init SEMICOLON expr SEMICOLON error  */
-#line 486 "parser.y"
+#line 487 "parser.y"
                                                          { yyerror("Missing increment expression in 'for'"); }
 #line 3385 "parser.tab.c"
     break;
 
   case 291: /* loop_stmt: FOR LPAREN for_init SEMICOLON expr SEMICOLON expr error  */
-#line 487 "parser.y"
+#line 488 "parser.y"
                                                               { yyerror("Missing ')' after 'for' expressions"); }
 #line 3391 "parser.tab.c"
     break;
 
   case 292: /* loop_stmt: FOR LPAREN for_init SEMICOLON expr SEMICOLON expr RPAREN error  */
-#line 488 "parser.y"
+#line 489 "parser.y"
                                                                      { yyerror("Missing '{' after 'for' loop"); }
 #line 3397 "parser.tab.c"
     break;
 
   case 293: /* loop_stmt: WHILE error  */
-#line 491 "parser.y"
+#line 492 "parser.y"
                   { yyerror("Missing '(' after 'while'"); }
 #line 3403 "parser.tab.c"
     break;
 
   case 294: /* loop_stmt: WHILE LPAREN error  */
-#line 492 "parser.y"
+#line 493 "parser.y"
                          { yyerror("Missing condition inside 'while'"); }
 #line 3409 "parser.tab.c"
     break;
 
   case 295: /* loop_stmt: WHILE LPAREN expr error  */
-#line 493 "parser.y"
+#line 494 "parser.y"
                               { yyerror("Missing ')' after 'while' condition"); }
 #line 3415 "parser.tab.c"
     break;
 
   case 296: /* loop_stmt: WHILE LPAREN expr RPAREN error  */
-#line 494 "parser.y"
+#line 495 "parser.y"
                                      { yyerror("Missing '{' after 'while' condition"); }
 #line 3421 "parser.tab.c"
     break;
 
   case 297: /* loop_stmt: DO error  */
-#line 497 "parser.y"
+#line 498 "parser.y"
                { yyerror("Missing '{' after 'do'"); }
 #line 3427 "parser.tab.c"
     break;
 
   case 298: /* loop_stmt: DO LBRACE error  */
-#line 498 "parser.y"
+#line 499 "parser.y"
                       { yyerror("Missing statements inside 'do'"); }
 #line 3433 "parser.tab.c"
     break;
 
   case 299: /* loop_stmt: DO LBRACE stmts error  */
-#line 499 "parser.y"
+#line 500 "parser.y"
                             { yyerror("Missing '}' after 'do' block"); }
 #line 3439 "parser.tab.c"
     break;
 
   case 300: /* loop_stmt: DO LBRACE stmts RBRACE error  */
-#line 500 "parser.y"
+#line 501 "parser.y"
                                    { yyerror("Missing 'while' after 'do' block"); }
 #line 3445 "parser.tab.c"
     break;
 
   case 301: /* loop_stmt: DO LBRACE stmts RBRACE WHILE error  */
-#line 501 "parser.y"
+#line 502 "parser.y"
                                          { yyerror("Missing '(' after 'while' in 'do-while'"); }
 #line 3451 "parser.tab.c"
     break;
 
   case 302: /* loop_stmt: DO LBRACE stmts RBRACE WHILE LPAREN error  */
-#line 502 "parser.y"
+#line 503 "parser.y"
                                                 { yyerror("Missing condition inside 'do-while'"); }
 #line 3457 "parser.tab.c"
     break;
 
   case 303: /* loop_stmt: DO LBRACE stmts RBRACE WHILE LPAREN expr error  */
-#line 503 "parser.y"
+#line 504 "parser.y"
                                                      { yyerror("Missing ')' after 'do-while' condition"); }
 #line 3463 "parser.tab.c"
     break;
 
   case 304: /* loop_stmt: DO LBRACE stmts RBRACE WHILE LPAREN expr RPAREN error  */
-#line 504 "parser.y"
+#line 505 "parser.y"
                                                             { yyerror("Missing ';' after 'do-while'"); }
 #line 3469 "parser.tab.c"
     break;
 
   case 306: /* switch_stmt: SWITCH error  */
-#line 512 "parser.y"
+#line 513 "parser.y"
                    { yyerror("Missing '(' after 'switch'"); }
 #line 3475 "parser.tab.c"
     break;
 
   case 307: /* switch_stmt: SWITCH LPAREN error  */
-#line 513 "parser.y"
+#line 514 "parser.y"
                           { yyerror("Missing expression inside 'switch'"); }
 #line 3481 "parser.tab.c"
     break;
 
   case 308: /* switch_stmt: SWITCH LPAREN expr error  */
-#line 514 "parser.y"
+#line 515 "parser.y"
                                { yyerror("Missing ')' after switch condition"); }
 #line 3487 "parser.tab.c"
     break;
 
   case 309: /* switch_stmt: SWITCH LPAREN expr RPAREN error  */
-#line 515 "parser.y"
+#line 516 "parser.y"
                                       { yyerror("Missing '{' to start switch body"); }
 #line 3493 "parser.tab.c"
     break;
 
   case 310: /* switch_stmt: SWITCH LPAREN expr RPAREN LBRACE error  */
-#line 516 "parser.y"
+#line 517 "parser.y"
                                              { yyerror("Invalid or missing case/default blocks inside switch"); }
 #line 3499 "parser.tab.c"
     break;
 
   case 311: /* switch_stmt: SWITCH LPAREN expr RPAREN LBRACE case_blocks error  */
-#line 517 "parser.y"
+#line 518 "parser.y"
                                                          { yyerror("Missing default block or closing '}' in switch"); }
 #line 3505 "parser.tab.c"
     break;
 
   case 316: /* case_block: CASE NUMBER COLON error  */
-#line 528 "parser.y"
+#line 529 "parser.y"
                               { yyerror("Missing statements inside case block"); }
 #line 3511 "parser.tab.c"
     break;
 
   case 318: /* default_block_opt: DEFAULT COLON error  */
-#line 533 "parser.y"
+#line 534 "parser.y"
                           { yyerror("Missing statements inside default block"); }
 #line 3517 "parser.tab.c"
     break;
 
   case 322: /* control_stmt: BREAK error  */
-#line 542 "parser.y"
+#line 543 "parser.y"
                   { yyerror("Missing ';' after 'break'"); }
 #line 3523 "parser.tab.c"
     break;
 
   case 323: /* control_stmt: CONTINUE error  */
-#line 543 "parser.y"
+#line 544 "parser.y"
                      { yyerror("Missing ';' after 'continue'"); }
 #line 3529 "parser.tab.c"
     break;
 
   case 331: /* function_def: type_specifier error  */
-#line 559 "parser.y"
+#line 560 "parser.y"
                            { yyerror("Missing function name"); }
 #line 3535 "parser.tab.c"
     break;
 
   case 332: /* function_def: type_specifier ID error  */
-#line 560 "parser.y"
+#line 561 "parser.y"
                               { yyerror("Missing '(' after function name"); }
 #line 3541 "parser.tab.c"
     break;
 
   case 333: /* function_def: type_specifier ID LPAREN error  */
-#line 561 "parser.y"
+#line 562 "parser.y"
                                      { yyerror("Bad parameter list"); }
 #line 3547 "parser.tab.c"
     break;
 
   case 338: /* param: type_specifier error  */
-#line 573 "parser.y"
+#line 574 "parser.y"
                            { yyerror("Missing parameter name"); }
 #line 3553 "parser.tab.c"
     break;
 
   case 344: /* class_def: CLASS error  */
-#line 587 "parser.y"
+#line 588 "parser.y"
                   { yyerror("Missing class name after 'class'"); }
 #line 3559 "parser.tab.c"
     break;
 
   case 345: /* class_def: CLASS ID inheritance error  */
-#line 588 "parser.y"
+#line 589 "parser.y"
                                  { yyerror("Missing '{' after class declaration with inheritance"); }
 #line 3565 "parser.tab.c"
     break;
 
   case 346: /* class_def: CLASS ID LBRACE error  */
-#line 589 "parser.y"
+#line 590 "parser.y"
                             { yyerror("Invalid class body"); }
 #line 3571 "parser.tab.c"
     break;
 
   case 348: /* inheritance: COLON error  */
-#line 594 "parser.y"
+#line 595 "parser.y"
                   { yyerror("Invalid inheritance syntax"); }
 #line 3577 "parser.tab.c"
     break;
 
   case 362: /* class_member: VIRTUAL type_specifier error  */
-#line 617 "parser.y"
+#line 618 "parser.y"
                                  { yyerror("Invalid virtual function"); }
 #line 3583 "parser.tab.c"
     break;
 
   case 387: /* return_stmt: RETURN return_expr error  */
-#line 669 "parser.y"
+#line 670 "parser.y"
         { yyerror("Missing ';' after return value"); }
 #line 3589 "parser.tab.c"
     break;
 
   case 388: /* return_stmt: RETURN error  */
-#line 671 "parser.y"
+#line 672 "parser.y"
         { yyerror("Missing return value after 'return'"); }
 #line 3595 "parser.tab.c"
     break;
@@ -3788,7 +3788,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 679 "parser.y"
+#line 680 "parser.y"
 
 
 void print_token(const char *type, const char *value) {
@@ -3798,17 +3798,32 @@ void print_token(const char *type, const char *value) {
 }
 
 
+
+
 void yyerror(const char *s) {
-    fprintf(stderr, "Error at line %d: %s\n", line_no, s);
-    if (pending_custom_msg != NULL) {
-        fprintf(stderr, "Details: %s\n", pending_custom_msg);
-        pending_custom_msg = NULL;
+    if (pending_custom_msg) {
+        fprintf(stderr, "Error at line %d: %s\n", line_no, pending_custom_msg);
+        pending_custom_msg = NULL;  // Reset after use
+    } else {
+        fprintf(stderr, "Error at line %d: %s\n", line_no, s);
     }
     error_count++;
 }
 
+void set_error_msg(const char *msg) {
+    // Free previous message if it exists
+    if (pending_custom_msg) {
+        free((void*)pending_custom_msg);
+    }
+    // Duplicate the new message
+    pending_custom_msg = strdup(msg);
+    if (!pending_custom_msg) {
+        perror("Failed to allocate error message");
+        exit(1);
+    }
+}
+
 int main(int argc, char **argv) {
-    pending_custom_msg = NULL;
     if (argc > 1) {
         yyin = fopen(argv[1], "r");
         if (!yyin) {
@@ -3817,22 +3832,23 @@ int main(int argc, char **argv) {
         }
     }
 
-    // Open token table output file
     token_table = fopen("token_table.txt", "w");
     if (!token_table) {
         perror("Could not open token_table.txt");
         return 1;
     }
 
-      fprintf(token_table, "+----------------------+------------+----------------------+\n");
-    fprintf(token_table, "| %-20s | %-10s | %-20s |\n", "Token", "Type", "Line");
+    fprintf(token_table, "+----------------------+------------+----------------------+\n");
+    fprintf(token_table, "| %-20s | %-10s | %-20s |\n", "Token", "Line", "Value");
     fprintf(token_table, "+----------------------+------------+----------------------+\n");
 
-    // Start parsing the file
     yyparse();
+    if (pending_custom_msg) {
+        free(pending_custom_msg);
+    }
+    
     fprintf(token_table, "+----------------------+------------+----------------------+\n");
-    // Close the token table file
     fclose(token_table);
 
-    return 0;
+    return error_count > 0 ? 1 : 0;
 }

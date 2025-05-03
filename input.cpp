@@ -27,7 +27,7 @@ public:
 
     // Method to greet
     void greet() {
-        cout << "Hello, " << name << "!" << endl;
+        cout << "Hello, " << name << "!" << endl
     }
 
     ~Person(){}

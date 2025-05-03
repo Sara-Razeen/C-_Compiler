@@ -2,15 +2,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+char* pending_custom_msg = NULL;
 extern int yylex();
 extern FILE* yyin;
 extern int line_no;
 int error_count = 0;
 void yyerror(const char *s);
-const char* pending_custom_msg = NULL;
 FILE *token_table;
 void print_token(const char *type, const char *value);
 %}
+
 
 %start program
 
@@ -685,17 +686,32 @@ void print_token(const char *type, const char *value) {
 }
 
 
+
+
 void yyerror(const char *s) {
-    fprintf(stderr, "Error at line %d: %s\n", line_no, s);
-    if (pending_custom_msg != NULL) {
-        fprintf(stderr, "Details: %s\n", pending_custom_msg);
-        pending_custom_msg = NULL;
+    if (pending_custom_msg) {
+        fprintf(stderr, "Error at line %d: %s\n", line_no, pending_custom_msg);
+        pending_custom_msg = NULL;  // Reset after use
+    } else {
+        fprintf(stderr, "Error at line %d: %s\n", line_no, s);
     }
     error_count++;
 }
 
+void set_error_msg(const char *msg) {
+    // Free previous message if it exists
+    if (pending_custom_msg) {
+        free((void*)pending_custom_msg);
+    }
+    // Duplicate the new message
+    pending_custom_msg = strdup(msg);
+    if (!pending_custom_msg) {
+        perror("Failed to allocate error message");
+        exit(1);
+    }
+}
+
 int main(int argc, char **argv) {
-    pending_custom_msg = NULL;
     if (argc > 1) {
         yyin = fopen(argv[1], "r");
         if (!yyin) {
@@ -704,22 +720,23 @@ int main(int argc, char **argv) {
         }
     }
 
-    // Open token table output file
     token_table = fopen("token_table.txt", "w");
     if (!token_table) {
         perror("Could not open token_table.txt");
         return 1;
     }
 
-      fprintf(token_table, "+----------------------+------------+----------------------+\n");
-    fprintf(token_table, "| %-20s | %-10s | %-20s |\n", "Token", "Type", "Line");
+    fprintf(token_table, "+----------------------+------------+----------------------+\n");
+    fprintf(token_table, "| %-20s | %-10s | %-20s |\n", "Token", "Line", "Value");
     fprintf(token_table, "+----------------------+------------+----------------------+\n");
 
-    // Start parsing the file
     yyparse();
+    if (pending_custom_msg) {
+        free(pending_custom_msg);
+    }
+    
     fprintf(token_table, "+----------------------+------------+----------------------+\n");
-    // Close the token table file
     fclose(token_table);
 
-    return 0;
+    return error_count > 0 ? 1 : 0;
 }
