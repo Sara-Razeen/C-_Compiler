@@ -586,6 +586,7 @@ class_def:
     | CLASS ID inheritance LBRACE class_members RBRACE SEMICOLON
     | CLASS ID LBRACE access_specifier_list RBRACE SEMICOLON
     | CLASS error { yyerror("Missing class name after 'class'"); }
+    | CLASS ID error {yyerror("Missing '{' after class name");}
     | CLASS ID inheritance error { yyerror("Missing '{' after class declaration with inheritance"); }
     | CLASS ID LBRACE error { yyerror("Invalid class body"); }
     ;
@@ -685,18 +686,21 @@ void print_token(const char *type, const char *value) {
     }
 }
 
-
-
-
 void yyerror(const char *s) {
+    
+    
     if (pending_custom_msg) {
         fprintf(stderr, "Error at line %d: %s\n", line_no, pending_custom_msg);
-        pending_custom_msg = NULL;  // Reset after use
+        pending_custom_msg = NULL;
     } else {
         fprintf(stderr, "Error at line %d: %s\n", line_no, s);
     }
     error_count++;
+    if (error_count >= 2) {
+        exit(1);
+    }
 }
+
 
 void set_error_msg(const char *msg) {
     // Free previous message if it exists
@@ -705,8 +709,13 @@ void set_error_msg(const char *msg) {
     }
     // Duplicate the new message
     pending_custom_msg = strdup(msg);
-    if (!pending_custom_msg) {
+     if (!pending_custom_msg) {
         perror("Failed to allocate error message");
+        exit(1);
+    }
+    // Count this as an error
+    error_count++;
+    if (error_count >= 2) {
         exit(1);
     }
 }

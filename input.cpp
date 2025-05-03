@@ -12,11 +12,16 @@ public:
     
     void setName(string n) {
         name = n;
+        if (!n.empty()) {  // Check if name is not empty
+            name = n;
+        } else {
+            cout << "Error: Name cannot be empty" << endl;
+        }
     }
-
     // Getter for name
     string getName() {
         return name;
+        cout<<"Output statement"<<endl;
     }
 
     // Method to input name from user
@@ -27,7 +32,7 @@ public:
 
     // Method to greet
     void greet() {
-        cout << "Hello, " << name << "!" << endl
+        cout << "Hello, " << name << "!" << endl;
     }
 
     ~Person(){}
